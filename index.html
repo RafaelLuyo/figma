@@ -1,212 +1,167 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/>
-<title>HealthLab - Agendar Cita</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HealthLab - Mis Citas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#137fec",
-            "background-light": "#f6f7f8",
-            "background-dark": "#101922",
-          },
-          fontFamily: {
-            "display": ["Inter"]
-          },
-          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-        },
-      },
-    }
-  </script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
 <style>
-    .form-select {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-        background-position: right 0.5rem center;
-        background-repeat: no-repeat;
-        background-size: 1.5em 1.5em;
-        padding-right: 2.5rem;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-  </style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
 </head>
-<body class="font-display bg-background-light dark:bg-background-dark">
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
 <div class="flex flex-col min-h-screen">
-<header class="bg-white dark:bg-background-dark border-b border-gray-200 dark:border-gray-800">
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-<div class="flex h-16 items-center justify-between">
+<header class="bg-white dark:bg-background-dark/50 backdrop-blur-sm sticky top-0 z-10 border-b border-gray-200 dark:border-gray-800">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
 <div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-primary text-3xl">
-              science
-            </span>
+<div class="text-primary">
+<svg class="h-8 w-8" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path></svg>
+</div>
 <h1 class="text-xl font-bold text-gray-900 dark:text-white">HealthLab</h1>
 </div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Inicio</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Servicios</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Resultados</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Contacto</a>
+</nav>
 <div class="flex items-center gap-4">
-<button class="relative rounded-full p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-<span class="material-symbols-outlined">
-                notifications
-              </span>
+<button class="p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">notifications</span>
 </button>
-<div class="h-10 w-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKBNsXMC5DFcfNYzuDNFK5WjTIsjFTkUTCjTbfDcHNWiPynVDX0HP3PClBFXSJpMVJbIXGYxnyJ_0nYeIhSLNnRgH53bXiTE5ELIliOYCAyxD-L6egiJsbsqPP5EaNnr0zFmEOxyGsSZ5CcQx8lV6R6x1XB-UTqtm0UrvXGpOm6TT7FW4p5ASCkQpdH2ZT2zlS2MIMoAoVEeZuqiL88KVbEZ8SpicDq9zdJtuuHFm_txBtlKc5Cyy2LRRMgszqEtBlW0HEPtD3u_A");'></div>
-</div>
-</div>
-</div>
-<div class="bg-primary/10 dark:bg-primary/20 p-4">
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center gap-4">
-<span class="material-symbols-outlined text-primary text-2xl">person</span>
-<div>
-<p class="font-bold text-gray-900 dark:text-white">Juan Pérez</p>
-<p class="text-sm text-gray-600 dark:text-gray-300">Resumen de la cita: Aún no has seleccionado los detalles.</p>
+<div class="w-10 h-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBymLXhmwS9D3S6K3jh90gZ7lSsxP4KFFCoE-Td3TzgxBVvwy6fJ1ZuzhgUJrTd3iRjrFDj-fsu08johdZSRVELTnITPqCRmJ8qMYdHUEKWnwzkGJLk7ewDGs2A9i-lPm6xEqY8VOhmDh9VkQK9mdHe-91Yn7wAPBfdlztFiYK581bwnuK_gHa8-ZmCbE07p6BT3JGdOQACYlnQ9gn5RvfLqpVhHuiB80VgCZGmpMgkLWu7sr5luAXz1HUDmqWJZqW8v3JcBwcfvXA");'></div>
 </div>
 </div>
 </div>
 </header>
-<main class="flex-grow">
-<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-<div class="grid grid-cols-1 gap-12 lg:grid-cols-3">
-<div class="lg:col-span-2 space-y-8">
-<div>
-<h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white mb-6">Agendar Cita</h2>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Mis Citas</h2>
 <div class="space-y-6">
-<div>
-<label class="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2" for="analysis-type">Tipo de Análisis</label>
-<select class="form-select block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white py-3 px-4 focus:border-primary focus:ring-primary text-base" id="analysis-type" name="analysis-type">
-<option>Seleccionar tipo de análisis</option>
-<option>Análisis de Sangre Completo</option>
-<option>Perfil Lipídico</option>
-<option>Prueba de Glucosa</option>
-</select>
+<div class="bg-white dark:bg-background-dark/70 rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-transparent dark:border-gray-800">
+<div class="p-6 flex flex-col md:flex-row gap-6">
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900/50 text-primary">
+                                        Próxima
+                                    </span>
 </div>
-<div class="relative">
-<span class="material-symbols-outlined pointer-events-none absolute top-3.5 left-4 text-gray-400">
-                    search
-                  </span>
-<input class="block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 py-3 pl-12 pr-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary text-base" id="search-analysis" name="search-analysis" placeholder="Buscar análisis..." type="text"/>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Análisis de Sangre</h3>
+<div class="mt-2 text-gray-600 dark:text-gray-400 space-y-1 text-sm">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">calendar_today</span> 15 de Julio, 2024</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">schedule</span> 10:00 AM</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">location_on</span> Sede: Clínica Central</p>
+</div>
+<div class="mt-6 flex flex-wrap gap-3">
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark">
+<span class="material-symbols-outlined text-base">edit_calendar</span>
+                                        Reprogramar
+                                    </button>
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark">
+<span class="material-symbols-outlined text-base">cancel</span>
+                                        Cancelar Cita
+                                    </button>
 </div>
 </div>
-</div>
-<div>
-<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Seleccionar Fecha</h3>
-<div class="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-sm">
-<div class="flex items-center justify-between mb-4">
-<button class="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
-<span class="material-symbols-outlined">chevron_left</span>
-</button>
-<h4 class="font-semibold text-lg text-gray-900 dark:text-white">Julio 2024</h4>
-<button class="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
-<span class="material-symbols-outlined">chevron_right</span>
-</button>
-</div>
-<div class="grid grid-cols-7 gap-1 text-center text-sm">
-<div class="font-medium text-gray-500 dark:text-gray-400">D</div>
-<div class="font-medium text-gray-500 dark:text-gray-400">L</div>
-<div class="font-medium text-gray-500 dark:text-gray-400">M</div>
-<div class="font-medium text-gray-500 dark:text-gray-400">X</div>
-<div class="font-medium text-gray-500 dark:text-gray-400">J</div>
-<div class="font-medium text-gray-500 dark:text-gray-400">V</div>
-<div class="font-medium text-gray-500 dark:text-gray-400">S</div>
-<div class="text-gray-400 dark:text-gray-600">30</div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">1</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">2</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">3</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">4</button></div>
-<div><button class="w-10 h-10 rounded-full bg-primary text-white font-semibold">5</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">6</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">7</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">8</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">9</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">10</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">11</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">12</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">13</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">14</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">15</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">16</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">17</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">18</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">19</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">20</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">21</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">22</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">23</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">24</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">25</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">26</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">27</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">28</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">29</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">30</button></div>
-<div><button class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200">31</button></div>
+<div class="md:w-1/3 lg:w-1/4 flex-shrink-0">
+<div class="w-full h-full bg-cover bg-center rounded-lg aspect-square md:aspect-auto" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIcq5AgydtDEjfmPt8ockPmw2QjbMQtGn1WzqgIIWQbBp5vkkP_OocHSNqkg91A0rJwYGSwsANzSHX3hCRfJEZzO1ZjV4gfq1wCrLQV2rzfkZwziCPPCW7OCqumnpQx3OGzUzdjpbEu1CwsaciDLYdQkbfRAaDr_XEaUJ5mycBREaqZMhJ-rZK99IvsiPZvbyHZ248E8x5c65XYBYaZ2O_pIPyXf1cwyuwdcFYkAkAkIffihWMa7NF0Whhf52s53MoUYjaAad3Xns");'></div>
 </div>
 </div>
 </div>
-<div>
-<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Seleccionar Sede</h3>
-<div class="space-y-4">
-<div class="w-full h-64 rounded-xl bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAJ773ZTqywxefNiZVYo3u8s6222cyXvZXP9ls-YSFt4TRxsKzzMXWHGGaArVm9f1J43-eaPJ9WX7w2B0_M8LVsOpfBpCfTkfkWTFX8edYsXI2dBkJcajbS8cdd97vDhestTmonvLg_f_yzq6BkPA69FtWo2U1abEkZCH_SM2P7PUbH59U9RFyaB73A0dlr_oHLQuc0MjeRU6XJbbbI5wzuKp__avMOW6eLrOYQLNEyC5Zba6N4BpBt3ydaGDa2eQRbQEnGB8GmEFw");'></div>
-<select class="form-select block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white py-3 px-4 focus:border-primary focus:ring-primary text-base" id="location" name="location">
-<option>Seleccionar sede</option>
-<option>Sede Centro</option>
-<option>Sede Norte</option>
-<option>Sede Sur</option>
-</select>
+<div class="bg-white dark:bg-background-dark/70 rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-transparent dark:border-gray-800">
+<div class="p-6 flex flex-col md:flex-row gap-6">
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300">
+                                        Completada
+                                    </span>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Examen de Orina</h3>
+<div class="mt-2 text-gray-600 dark:text-gray-400 space-y-1 text-sm">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">calendar_today</span> 20 de Junio, 2024</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">schedule</span> 09:30 AM</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">location_on</span> Sede: Clínica Norte</p>
+</div>
+<div class="mt-6">
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark">
+<span class="material-symbols-outlined text-base">description</span>
+                                        Ver Resultados
+                                    </button>
+</div>
+</div>
+<div class="md:w-1/3 lg:w-1/4 flex-shrink-0">
+<div class="w-full h-full bg-cover bg-center rounded-lg aspect-square md:aspect-auto" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCzsh8A3BJylhrZ7W6xpHnVfBcOXmZb4K5uQoq9Vz0rp6cl1v3JOHoay6ZNkXgsWUPsmEwCQCf7-tWmpVbGdBfRvEoCHPX9jXbyxxr56Li_YCI1_eAeKpLHNAkcBCBHzEkswBP4NOo1VhIpDEYphw6svsy8PS3eWYTSNhMxSMF3TGWBDX0ON9gxjaFSkQBRcUNenxfyKwxXjxTvxTURWTIh6G56jMB7cG1HQIuN3vJymO8l4doyCtT75_E0QOzBSVauIiV7IOPOKA8");'></div>
 </div>
 </div>
 </div>
-<div class="space-y-8">
-<div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm">
-<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Horarios Disponibles</h3>
-<div>
-<div class="border-b border-gray-200 dark:border-gray-700">
-<nav aria-label="Tabs" class="-mb-px flex space-x-8">
-<a class="border-primary text-primary whitespace-nowrap border-b-2 py-4 px-1 text-base font-semibold" href="#">Mañana</a>
-<a class="border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium" href="#">Tarde</a>
-</nav>
+<div class="bg-white dark:bg-background-dark/70 rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-transparent dark:border-gray-800 opacity-60">
+<div class="p-6 flex flex-col md:flex-row gap-6">
+<div class="flex-grow">
+<div class="flex items-center gap-3 mb-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300">
+                                        Cancelada
+                                    </span>
 </div>
-<div class="py-6">
-<div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-<button class="rounded-lg border border-primary bg-primary/10 dark:bg-primary/20 p-4 text-center font-semibold text-primary">8:00 AM</button>
-<button class="rounded-lg border border-gray-300 dark:border-gray-700 p-4 text-center font-semibold text-gray-800 dark:text-gray-200 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10">8:30 AM</button>
-<button class="rounded-lg border border-gray-300 dark:border-gray-700 p-4 text-center font-semibold text-gray-800 dark:text-gray-200 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10">9:00 AM</button>
-<button class="rounded-lg border border-gray-300 dark:border-gray-700 p-4 text-center font-semibold text-gray-400 dark:text-gray-600 bg-gray-50 dark:bg-gray-800 cursor-not-allowed line-through">9:30 AM</button>
-<button class="rounded-lg border border-gray-300 dark:border-gray-700 p-4 text-center font-semibold text-gray-800 dark:text-gray-200 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10">10:00 AM</button>
-<button class="rounded-lg border border-gray-300 dark:border-gray-700 p-4 text-center font-semibold text-gray-800 dark:text-gray-200 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10">10:30 AM</button>
-<button class="rounded-lg border border-gray-300 dark:border-gray-700 p-4 text-center font-semibold text-gray-800 dark:text-gray-200 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10">11:00 AM</button>
-<button class="rounded-lg border border-gray-300 dark:border-gray-700 p-4 text-center font-semibold text-gray-400 dark:text-gray-600 bg-gray-50 dark:bg-gray-800 cursor-not-allowed line-through">11:30 AM</button>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Radiografía de Tórax</h3>
+<div class="mt-2 text-gray-600 dark:text-gray-400 space-y-1 text-sm">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">calendar_today</span> 5 de Mayo, 2024</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">schedule</span> 11:00 AM</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-base">location_on</span> Sede: Clínica Sur</p>
 </div>
+<div class="mt-6">
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed">
+<span class="material-symbols-outlined text-base">info</span>
+                                        Detalles
+                                    </button>
 </div>
 </div>
-</div>
-<div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm space-y-4">
-<h3 class="text-2xl font-bold text-gray-900 dark:text-white">Resumen de la Cita</h3>
-<div class="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-3 text-gray-700 dark:text-gray-300">
-<div class="flex justify-between">
-<span class="font-medium">Análisis:</span>
-<span>Análisis de Sangre</span>
-</div>
-<div class="flex justify-between">
-<span class="font-medium">Fecha:</span>
-<span>Viernes, 5 de Julio, 2024</span>
-</div>
-<div class="flex justify-between">
-<span class="font-medium">Hora:</span>
-<span>8:00 AM</span>
-</div>
-<div class="flex justify-between">
-<span class="font-medium">Sede:</span>
-<span>Sede Centro</span>
+<div class="md:w-1/3 lg:w-1/4 flex-shrink-0">
+<div class="w-full h-full bg-cover bg-center rounded-lg aspect-square md:aspect-auto" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsdGAV_ocbA6gNba7F7ppJzodGEPnKXbfLzrJ-ccxRP6qEZtRYjepeD2wSRbvjY4SOPRNUFEXrWaulNJwjDiAUP5_dhl3oNeUAZvDyS5hu-wHZHu74JQZIzu2B-0G87cz2-HLNs1VnHiNa2HnUviC4XJEufcaaesqeVdS6lHqslgDMyS5n799Yeg885Je5fdTRVJhEPWdC023gcTpdd7eCt1WbfpkXqLR0EYEoks-fmDAZh6sZhQOBvC6dTrK2IxDEhTFTgv49j5k");'></div>
 </div>
 </div>
-<button class="w-full rounded-lg bg-primary py-4 px-6 text-lg font-bold text-white shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                    Confirmar Cita
-                </button>
+</div>
+<div class="text-center py-16 px-6 bg-white dark:bg-background-dark/70 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700">
+<span class="material-symbols-outlined text-6xl text-gray-400 dark:text-gray-500 mx-auto">event_busy</span>
+<h3 class="mt-4 text-xl font-medium text-gray-900 dark:text-white">No tienes citas programadas</h3>
+<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Cuando agendes una nueva cita, la verás aquí.</p>
+<div class="mt-6">
+<button class="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg bg-primary text-white hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark">
+<span class="material-symbols-outlined text-base">add</span>
+                                Agendar Nueva Cita
+                            </button>
 </div>
 </div>
 </div>
