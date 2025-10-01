@@ -2,13 +2,13 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>HealthLab - Clinical Analysis Report</title>
+<title>HealthLab - Seguimiento de Muestra</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script>
+<script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -17,154 +17,175 @@
                         "primary": "#137fec",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
+                        "foreground-light": "#111418",
+                        "foreground-dark": "#f0f2f4",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1b2734",
+                        "muted-light": "#617589",
+                        "muted-dark": "#90a3b8",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#344558",
+                        "success-light": "#22c55e",
+                        "success-dark": "#4ade80",
                     },
                     fontFamily: {
                         "display": ["Inter"]
                     },
                     borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
                         "full": "9999px"
+                    },
+                    keyframes: {
+                        progress: {
+                            '0%': {
+                                width: '0%'
+                            },
+                            '100%': {
+                                width: 'var(--progress-width, 75%)'
+                            },
+                        },
+                    },
+                    animation: {
+                        'progress-bar': 'progress 1s ease-out forwards',
                     },
                 },
             },
         }
     </script>
 <style>
-        .watermark {
+        .timeline-item:not(:last-child)::before {
+            content: "";
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
-            opacity: 0.05;
-            pointer-events: none;
-            font-size: 8rem;
-            font-weight: 700;
-            color: #137fec;
-        }
+            left: 20px;
+            top: 48px;
+            bottom: -16px;
+            width: 2px;
+            background-color: #e5e7eb;}
+        .dark .timeline-item:not(:last-child)::before {
+            background-color: #344558;}
+        .timeline-item[data-status="completed"]::before {
+             background: linear-gradient(to bottom, #22c55e, #137fec);}
+        .dark .timeline-item[data-status="completed"]::before {
+             background: linear-gradient(to bottom, #4ade80, #137fec);}
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
 <div class="flex flex-col min-h-screen">
-<header class="bg-white dark:bg-background-dark/50 border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-10">
+<header class="sticky top-0 z-10 bg-card-light/80 dark:bg-card-dark/80 backdrop-blur-sm border-b border-border-light dark:border-border-dark">
 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex items-center justify-between h-16">
-<div class="flex items-center gap-3">
-<div class="text-primary size-7">
-<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
-</div>
-<h1 class="text-xl font-bold text-gray-900 dark:text-white">HealthLab</h1>
-</div>
 <div class="flex items-center gap-4">
-<button class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="material-symbols-outlined text-primary text-3xl">science</span>
+<h1 class="text-xl font-bold">HealthLab</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-sm font-medium text-primary" href="#">Citas</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Resultados</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Perfil</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-primary/10 transition-colors">
 <span class="material-symbols-outlined">notifications</span>
 </button>
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCncIJliVMV7dl0NSQynP9P4_gRC3Z8JnxpSFOAHnA9YQjBMpweHCJM0jR_Ke4cNFqrDm1VJog4cvf6k0rb5vzkGfwKPLp-FGt_UrKT3tUexoiqvn-MUcdnguE_Ylw4cvcWRpn2WJPZ9T2mfZlCAWJoLnyJsymBhxJDhk4nTyWyRgcgGG9MW8PCeH0DRSgQsNtTxQ8mKHVGgd1QHGOejdJqDM6TS_xlF5Nx5sFd3Pp-gT0B--WbXmSmqcU7m9cYp8XQ9OafqAF2JXc");'></div>
+<div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApHgvvJqjDDwGYG4BIZ9utlSuMZo2vZj0BCOhz_74tDuWr4zXGdhRiOcVpCX0xQHZNQVHTYjYG_--bXfBHKU6KlCPcJd6LLok2cKP98vsVh4QsYfHd5-mFI93L26i58bGvzH805yzrYiGKrmNlJq5Qr_wmYZMMUhL02vVnzyPaQVC6f68x5GJjLyhCsElqnRuNMe9dyPOnPSYfcaquMm4Lwe4FXW158IMdJf-oEzZSqzYY-lPAy0Wbm2MniquATDwIGnWwUzNgeR0");'></div>
 </div>
 </div>
 </div>
 </header>
-<main class="flex-grow container mx-auto p-4 sm:p-6 lg:p-8">
-<div class="max-w-4xl mx-auto bg-white dark:bg-background-dark/70 rounded-lg shadow-lg relative overflow-hidden">
-<div class="watermark">HealthLab</div>
-<div class="p-6 md:p-8 border-b border-gray-200 dark:border-gray-700">
-<h2 class="text-3xl font-bold text-gray-900 dark:text-white">Hemograma Completo</h2>
-<p class="text-gray-500 dark:text-gray-400 mt-1">Fecha del Informe: 15 de Marzo de 2024</p>
-</div>
-<div class="p-6 md:p-8">
-<div class="overflow-x-auto">
-<table class="w-full text-left">
-<thead class="border-b border-gray-200 dark:border-gray-700">
-<tr>
-<th class="py-3 pr-4 font-semibold text-gray-600 dark:text-gray-300">Parámetro</th>
-<th class="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300 text-center">Resultado</th>
-<th class="py-3 px-4 font-semibold text-gray-600 dark:text-gray-300">Rango de Referencia</th>
-<th class="py-3 pl-4 font-semibold text-gray-600 dark:text-gray-300">Unidad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="border-b border-gray-200 dark:border-gray-700">
-<td class="py-4 pr-4 font-medium text-gray-800 dark:text-gray-200">Recuento de Glóbulos Blancos</td>
-<td class="py-4 px-4 text-center"><span class="bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300 font-semibold px-3 py-1 rounded-full text-sm">7.5</span></td>
-<td class="py-4 px-4 text-gray-600 dark:text-gray-400">4.5 - 11.0</td>
-<td class="py-4 pl-4 text-gray-600 dark:text-gray-400">x10⁹/L</td>
-</tr>
-<tr class="border-b border-gray-200 dark:border-gray-700">
-<td class="py-4 pr-4 font-medium text-gray-800 dark:text-gray-200">Recuento de Glóbulos Rojos</td>
-<td class="py-4 px-4 text-center"><span class="bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300 font-semibold px-3 py-1 rounded-full text-sm">4.1</span></td>
-<td class="py-4 px-4 text-gray-600 dark:text-gray-400">4.2 - 5.4</td>
-<td class="py-4 pl-4 text-gray-600 dark:text-gray-400">x10¹²/L</td>
-</tr>
-<tr class="border-b border-gray-200 dark:border-gray-700">
-<td class="py-4 pr-4 font-medium text-gray-800 dark:text-gray-200">Hemoglobina</td>
-<td class="py-4 px-4 text-center"><span class="bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300 font-semibold px-3 py-1 rounded-full text-sm">14.2</span></td>
-<td class="py-4 px-4 text-gray-600 dark:text-gray-400">13.5 - 17.5</td>
-<td class="py-4 pl-4 text-gray-600 dark:text-gray-400">g/dL</td>
-</tr>
-<tr class="border-b border-gray-200 dark:border-gray-700">
-<td class="py-4 pr-4 font-medium text-gray-800 dark:text-gray-200">Hematocrito</td>
-<td class="py-4 px-4 text-center"><span class="bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300 font-semibold px-3 py-1 rounded-full text-sm">42.5</span></td>
-<td class="py-4 px-4 text-gray-600 dark:text-gray-400">40.0 - 52.0</td>
-<td class="py-4 pl-4 text-gray-600 dark:text-gray-400">%</td>
-</tr>
-<tr>
-<td class="py-4 pr-4 font-medium text-gray-800 dark:text-gray-200">Recuento de Plaquetas</td>
-<td class="py-4 px-4 text-center"><span class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300 font-semibold px-3 py-1 rounded-full text-sm">145</span></td>
-<td class="py-4 px-4 text-gray-600 dark:text-gray-400">150 - 400</td>
-<td class="py-4 pl-4 text-gray-600 dark:text-gray-400">x10⁹/L</td>
-</tr>
-</tbody>
-</table>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-3xl mx-auto">
+<h2 class="text-3xl font-extrabold tracking-tight mb-4">Seguimiento de Muestra</h2>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm mb-8">
+<div class="flex flex-col md:flex-row items-start gap-6">
+<div class="flex-grow">
+<p class="text-sm text-muted-light dark:text-muted-dark font-medium mb-1">Código de Muestra</p>
+<p class="text-lg font-bold text-primary mb-3">2023-AB-12345</p>
+<p class="text-sm text-muted-light dark:text-muted-dark font-medium mb-1">Tipo de Análisis</p>
+<p class="font-semibold mb-3">Hemograma Completo</p>
+<div class="flex items-center gap-2 text-muted-light dark:text-muted-dark">
+<span class="material-symbols-outlined text-lg">hourglass_top</span>
+<p class="text-sm font-medium">Tiempo estimado restante: <span class="text-foreground-light dark:text-foreground-dark font-bold">2 horas</span></p>
 </div>
 </div>
-<div class="p-6 md:p-8 border-t border-gray-200 dark:border-gray-700">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white">Observaciones del Patólogo</h3>
-<p class="text-gray-600 dark:text-gray-400 mt-2">Ligera trombocitopenia y anisocitosis eritrocitaria observada. Se recomienda seguimiento y correlación clínica.</p>
-</div>
-<div class="p-6 md:p-8 border-t border-gray-200 dark:border-gray-700">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Tendencia de Hemoglobina (Últimos 6 meses)</h3>
-<div class="bg-gray-50 dark:bg-background-dark p-4 rounded-lg">
-<div class="flex items-start gap-4">
-<div class="flex-1">
-<p class="text-sm font-medium text-gray-600 dark:text-gray-400">Valor Actual</p>
-<p class="text-2xl font-bold text-gray-900 dark:text-white">14.2 g/dL</p>
-<div class="flex items-center gap-1 mt-1 text-sm text-green-600 dark:text-green-400">
-<span class="material-symbols-outlined text-base">trending_up</span>
-<span>+2% vs. mes anterior</span>
+<div class="w-full md:w-48 h-32 rounded-lg bg-cover bg-center shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9oxGDvL9Zosjfcf4JUPlWL5u3tSMv809jT-_jiOXXDlfWWuU5WfLQb8rjUdh3oE0QzXwV5duTInUZyfdQybja0oFYGfLmsUfOCRN2aFWVVBkV1fQE8AKoA9OPeHtaFPAaH4LVT6zuuQAH03yjSiRvgM5SglzCu66y5gV_aY3dvibmOm8IyzD4xTVZ_epKgCnWnnzHvKiVfjIuA9XP5WtxYUrfwmisQleNUDHE_EGmLK_J42cIbCI-JHKQ8MaXrDspBJx9ltwg5TY");'></div>
 </div>
 </div>
-<div class="h-48 w-full flex-1">
-<svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#137fec" stroke-linecap="round" stroke-width="3"></path>
-<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z" fill="url(#trend-gradient)"></path>
-<defs><linearGradient gradientUnits="userSpaceOnUse" id="trend-gradient" x1="236" x2="236" y1="1" y2="149"><stop stop-color="#137fec" stop-opacity="0.2"></stop><stop offset="1" stop-color="#137fec" stop-opacity="0"></stop></linearGradient></defs>
-</svg>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm mb-8">
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-bold text-lg">Progreso General</h3>
+<p class="font-bold text-primary text-lg">75%</p>
+</div>
+<div class="w-full bg-background-light dark:bg-background-dark rounded-full h-3 overflow-hidden">
+<div class="bg-gradient-to-r from-primary to-success-light dark:to-success-dark h-3 rounded-full animate-progress-bar" style="--progress-width: 75%;"></div>
+</div>
+<div class="mt-4 p-4 rounded-lg bg-primary/10 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-sm text-primary font-medium">Hay una ligera demora en la etapa de validación. Estamos trabajando para resolverlo.</p>
 </div>
 </div>
-</div>
-</div>
-<div class="flex flex-col sm:flex-row items-center justify-between p-6 md:p-8 border-t border-gray-200 dark:border-gray-700 gap-4">
-<div class="flex items-center gap-4">
-<div class="w-24 h-12 bg-center bg-contain bg-no-repeat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9WhPRLRfDUCiKKCzV5h8MoIoJn029PaedDV1hxuQaSslYyWiAO6ocA849vpdmUt3QpGDpyR_SnviG2RZ9f6BfeE63SGdbAmnNQ619Rqfk5UdZ5dS9j5-MRxGmjlCvINZLqO409Y_b9VgBTW3GVh12JZOCJo5JXDEndoksOV7rhp7YqNYYAUlpQTA_UYu6lGGx2tmwXxbAJnZaHv3IRZ-Cz308gMhMyPy8D2gN7C-tMFHOkfDL17Hp7l5ozW9GIncjXYenM6Qhb1Y");'></div>
 <div>
-<p class="font-bold text-gray-900 dark:text-white">Dr. Juan Pérez</p>
-<p class="text-sm text-gray-500 dark:text-gray-400">Patólogo Clínico, C.P. 123456</p>
+<h3 class="text-xl font-bold mb-6">Línea de Tiempo</h3>
+<div class="relative space-y-10">
+<div class="timeline-item relative flex items-start gap-6" data-status="completed">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-success-light dark:bg-success-dark flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark relative z-10">
+<span class="material-symbols-outlined text-white">check</span>
+</div>
+<div>
+<p class="font-bold">Recepción</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">10:00 AM - Ana García</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success-light/20 text-success-light dark:bg-success-dark/20 dark:text-success-dark mt-2">Completado</span>
 </div>
 </div>
-<div class="flex gap-3">
-<button class="flex items-center justify-center gap-2 h-11 px-5 font-semibold rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-<span class="material-symbols-outlined">share</span>
-                            Compartir
-                        </button>
-<button class="flex items-center justify-center gap-2 h-11 px-5 font-semibold text-white rounded-lg bg-primary hover:bg-primary/90 transition-colors">
-<span class="material-symbols-outlined">download</span>
-                            Descargar PDF
-                        </button>
+<div class="timeline-item relative flex items-start gap-6" data-status="completed">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-success-light dark:bg-success-dark flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark relative z-10">
+<span class="material-symbols-outlined text-white">check</span>
 </div>
+<div>
+<p class="font-bold">Análisis</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">10:30 AM - Carlos López</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success-light/20 text-success-light dark:bg-success-dark/20 dark:text-success-dark mt-2">Completado</span>
+</div>
+</div>
+<div class="timeline-item relative flex items-start gap-6" data-status="in-progress">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark relative z-10">
+<span class="material-symbols-outlined text-white animate-spin">autorenew</span>
+</div>
+<div>
+<p class="font-bold">Validación</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">11:30 AM - Sofía Martínez</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary/20 text-primary mt-2">En Proceso</span>
+</div>
+</div>
+<div class="timeline-item relative flex items-start gap-6" data-status="pending">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-border-light dark:bg-border-dark flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark relative z-10">
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">schedule</span>
+</div>
+<div>
+<p class="font-bold text-muted-light dark:text-muted-dark">Finalizado</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">12:30 PM - Resultados Disponibles</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted-light/20 text-muted-light dark:bg-muted-dark/20 dark:text-muted-dark mt-2">Pendiente</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<button class="bg-primary text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-background-dark transition-all duration-300 transform hover:scale-105">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined">notifications_active</span>
+                            Notificarme cuando esté listo
+                        </span>
+</button>
 </div>
 </div>
 </main>
+<footer class="mt-auto py-6 border-t border-border-light dark:border-border-dark">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-light dark:text-muted-dark">
+<p>Si tiene alguna pregunta, contáctenos al 555-123-4567 o visite nuestro sitio web: <a class="font-medium text-primary hover:underline" href="#">healthlab.com</a></p>
+</div>
+</footer>
 </div>
 
 </body></html>
